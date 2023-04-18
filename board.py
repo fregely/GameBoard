@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushButton, QSizePolicy, QMessageBox
 from PyQt6.QtGui import QPixmap, QColor, QPalette
 
 class Color(QWidget):
@@ -22,19 +22,31 @@ class MyWindow(QWidget):
         
     def initUI(self):
         label = QLabel(self)
-        pixmap = QPixmap(r'Checkerboard.jpg')
+        pixmap = QPixmap(r'Pictures\Checkerboard.jpg')
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         self.show()
 
     def peices(self):
         board = QGridLayout()
+        spacer = QWidget()
+        spacer.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding)
         for i in range(8):
-            for j in range(8):
-                board.addWidget(Color('red'), j,i)
+            for j in range(2):
+                board.addWidget(QPushButton("hi"),j,i)
+            for middle in range(3,5):
+                board.addWidget(spacer, middle, i)
+            for k in range(5,7):
+                board.addWidget(QPushButton("bye"),k,i)
         self.setLayout(board)
+            
 
-
+class whiteButton(QPushButton):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry
 app = QApplication(sys.argv)
 window = MyWindow()
 sys.exit(app.exec())
