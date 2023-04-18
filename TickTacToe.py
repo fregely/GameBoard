@@ -103,9 +103,9 @@ class checkWin:
             msg = QMessageBox(text = "Victory!" + text)
             msg.StandardButton.Ok
             msg.exec()
-            msg.buttonClicked.connect(self.exit)
+            msg.buttonClicked.connect(self.exit())
     def exit(self):
-        sys.exit
+        sys.exit()
 
         
 
