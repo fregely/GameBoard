@@ -22,7 +22,7 @@ class MyWindow(QWidget):
         
     def initUI(self):
         label = QLabel(self)
-        pixmap = QPixmap(r'Checkerboard.jpg')
+        pixmap = QPixmap(r'Pictures\Checkerboard.jpg')
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         self.show()
