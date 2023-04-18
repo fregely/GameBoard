@@ -1,17 +1,46 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushButton, QSizePolicy\
- ,QMessageBox
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QGridLayout, QPushButton, QSizePolicy\
+ ,QMessageBox, QLabel
 from PyQt6.QtGui import QPixmap, QColor, QPalette, QFont
-#creates the window for the application
-class MyWindow(QWidget):
+
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry(450,100, 500, 500)
+        self.setWindowTitle('Main Menu')
+        
+        self.layout = QVBoxLayout()
+        self.l1 = QLabel()
+        self.l1.setText('Please Select Game')
+        self.l1.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.l1)
+        self.startButton = QPushButton('Play TicTacToe')
+        self.startButton.clicked.connect(self.play)
+        self.exitButton = QPushButton('Exit')
+        self.exitButton.clicked.connect(self.exit)
+        self.layout.addWidget(self.startButton)
+        self.layout.addWidget(self.exitButton)
+
+        self.setLayout(self.layout)
+        
+        
+        self.show()
+    def play(self):
+        self.tickTackToe_window = TicTacToe()
+        self.tickTackToe_window.show()
+    def exit(self):
+        sys.exit()
+
+        
+#creates the TicTacToe board
+class TicTacToe(QWidget):
     def __init__(self):
         super().__init__()
         #Names the window, ontop of the page
         self.setWindowTitle('Tic-Tac-toe')
         #sets size of the window
-        self.setGeometry(0, 0, 500, 500)
-        #Opens the window
-        self.show()
+        self.setGeometry(450, 100, 500, 500)
         #Calls class function
         self.peices()
 
@@ -24,6 +53,9 @@ class MyWindow(QWidget):
                 board.addWidget(x_o(j,k), j , k)
         #Makes the layout of the window the grid
         self.setLayout(board)
+    def closing(self):
+        app.exit()
+        app.exec()
 
 #This Class can be improved a lot 
 class checkWin:
@@ -60,7 +92,6 @@ class checkWin:
         self.check = []
         for j in range(3):
             self.check.append(checkWin.board[2-j][j])
-            print(self.check)
         self.check = set(self.check)
         self.check = list(self.check)
         self.winCheck()  
@@ -72,9 +103,12 @@ class checkWin:
             msg = QMessageBox(text = "Victory!" + text)
             msg.StandardButton.Ok
             msg.exec()
-            msg.buttonClicked.connect(self.exit())
+            msg.buttonClicked.connect(self.exit)
     def exit(self):
-        sys.exit()
+        sys.exit
+
+        
+
 
 #Class for making the buttons, and giving them value, Uses QPushButtom to make the buttons
 class x_o(QPushButton):
@@ -101,6 +135,9 @@ class x_o(QPushButton):
             x_o.go = 1
             self.type = 'o'
         checkWin(self.location, self.type)
+
+
 app = QApplication(sys.argv)
-window = MyWindow()
-sys.exit(app.exec())
+window = MainWindow()
+window.show()
+app.exec()
