@@ -3,7 +3,6 @@ from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushBut
 from PyQt6.QtGui import QPixmap, QColor, QPalette
 
 class Color(QWidget):
-
     def __init__(self, color):
         super(Color, self).__init__()
         self.setAutoFillBackground(True)
@@ -18,7 +17,7 @@ class MyWindow(QWidget):
         self.setWindowTitle('Background Image')
         self.setGeometry(100, 100, 500, 500)
         self.initUI()
-        self.peices()
+        self.pieces()
         
     def initUI(self):
         label = QLabel(self)
@@ -27,7 +26,7 @@ class MyWindow(QWidget):
         label.resize(pixmap.width(), pixmap.height())
         self.show()
 
-    def peices(self):
+    def pieces(self):
         board = QGridLayout()
         spacer = QWidget()
         spacer.setSizePolicy(
