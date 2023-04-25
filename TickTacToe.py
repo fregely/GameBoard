@@ -38,7 +38,7 @@ class TicTacToe(QWidget):
     def __init__(self):
         super().__init__()
         #Names the window, ontop of the page
-        self.setWindowTitle('Tic-Tac-toe')
+        self.setWindowTitle('Tic-Tac-Toe')
         #sets size of the window
         self.setGeometry(450, 100, 500, 500)
         #Calls class function
@@ -104,11 +104,25 @@ class checkWin:
             msg.StandardButton.Ok
             msg.exec()
             msg.buttonClicked.connect(self.exit())
+        else:
+            self.catsGame()
+
+    def catsGame(self):
+        hello = []
+        for element in checkWin.board:
+            for elem in element:
+                if elem != 0:
+                    hello.append(elem)
+                    if len(hello) < 9:
+                        pass
+                    else:
+                        msg = QMessageBox(text = "This is a cat's game, no one wins")
+                        msg.StandardButton.Ok
+                        msg.exec()
+                        msg.buttonClicked.connect(self.exit())
+
     def exit(self):
         sys.exit()
-
-        
-
 
 #Class for making the buttons, and giving them value, Uses QPushButtom to make the buttons
 class x_o(QPushButton):
@@ -126,14 +140,20 @@ class x_o(QPushButton):
         self.location = [x,y]
         self.type = None
     def choice(self):
-        if self.go == 1:
-            self.setText('x')
-            x_o.go = 0
-            self.type = 'x'
-        elif self.go == 0: 
-            self.setText('o')
-            x_o.go = 1
-            self.type = 'o'
+        if checkWin.board[self.location[0]][self.location[1]] == 0:
+            if self.go == 1:
+                self.setText('x')
+                x_o.go = 0
+                self.type = 'x'
+            elif self.go == 0: 
+                self.setText('o')
+                x_o.go = 1
+                self.type = 'o'
+            checkWin.board[self.location[0]][self.location[1]] = self.type
+        checkWin(self.location, self.type)
+        checkWin(self.location, self.type)
+
+
         checkWin(self.location, self.type)
 
 
