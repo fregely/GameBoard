@@ -16,9 +16,13 @@ class MainWindow(QWidget):
         #Should add some decoration to make the menu look better
         self.layout = QVBoxLayout()
         self.l1 = QLabel()
-        self.l1.setText('Please Select Game')
+        self.miniongif = QMovie(r'Pictures\minions.gif')
+        self.l1.setMovie(self.miniongif)
+        self.l1.setObjectName("minion.miniongif")
+        # self.l1.setText('Please Select Game')
         self.l1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.l1)
+        self.miniongif.start()
         
         # Adds the buttons
         self.TicTactToeButton = QPushButton('Play TicTacToe')
@@ -69,14 +73,14 @@ class TicTacToe(QWidget):
         self.close()
         
 
-#This Class can be improved a lot 
+#class to check whether someone has won
 class checkWin:
     board = [[0,0,0],[0,0,0],[0,0,0]]
     def __init__(self, location, types):
         checkWin.board[location[0]][location[1]] = types
         self.check = []
         self.checkRows()      
-    #decieded to seperate all these out so I know which is which. Could combine
+    #decided to seperate all these out so we know which is which
     def checkRows(self):
         for j in range(3):
             self.check = set(checkWin.board[j])
@@ -107,6 +111,7 @@ class checkWin:
         self.check = set(self.check)
         self.check = list(self.check)
         self.winCheck()  
+        self.catsGame()
 
 
     def winCheck(self):
@@ -116,8 +121,7 @@ class checkWin:
             msg.StandardButton.Ok
             msg.exec()
             msg.buttonClicked.connect(self.exit())
-        else:
-            self.catsGame()
+        
 
     def catsGame(self):
         hello = []
@@ -300,30 +304,30 @@ class RPSAnimation(QWidget):
              if self.player == self.aiChoice:
                 self.who_won = "Tie"
              elif self.aiChoice == 'rock':
-                self.who_won = "A.I won"
+                self.who_won = "A.I. won :("
                 RPS.themWin = RPS.themWin + 1
              elif self.aiChoice == 'paper':
-                self.who_won = "You won"
+                self.who_won = "You won!!"
                 RPS.youWin += 1
         elif self.player == 'rock':
              self.player_movie = QMovie(r'Pictures\rock-paper-scissors-rock.gif')
              if self.player == self.aiChoice:
                 self.who_won = "Tie"
              elif self.aiChoice == 'paper':
-                self.who_won = "A.I won"
+                self.who_won = "A.I. won :("
                 RPS.themWin = RPS.themWin + 1
              elif self.aiChoice == 'scissors':
-                self.who_won = "You won"
+                self.who_won = "You won!!"
                 RPS.youWin += 1
         elif self.player == 'paper':
              self.player_movie = QMovie(r'Pictures\rock-paper-scissors-paper.gif')
              if self.player == self.aiChoice:
                 self.who_won = "Tie"
              elif self.aiChoice == 'scissors':
-                self.who_won = "A.I won"
+                self.who_won = "A.I. won :("
                 RPS.themWin = RPS.themWin + 1
              elif self.aiChoice == 'rock':
-                self.who_won = "You won"
+                self.who_won = "You won!!"
                 RPS.youWin += 1
     #Adds the win message
     def winMSG(self):
