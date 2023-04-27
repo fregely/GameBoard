@@ -12,8 +12,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.setGeometry(450,100, 500, 500)
         self.setWindowTitle('Main Menu')
-        
-        #Should add some decoration to make the menu look better
+        #adds a little bit of flaira 
         self.layout = QVBoxLayout()
         self.l1 = QLabel()
         self.miniongif = QMovie(r'Pictures\minions.gif')
@@ -36,9 +35,7 @@ class MainWindow(QWidget):
         self.layout.addWidget(self.exitButton)
 
         self.setLayout(self.layout)
-        
-        
-        self.show()
+                  
     def tictactoe(self):
         self.tickTackToe_window = TicTacToe()
         self.tickTackToe_window.show()
@@ -47,6 +44,10 @@ class MainWindow(QWidget):
         self.rps_window.show()
     def exit(self):
         sys.exit()
+    def exit_tick(self):
+        print('hi')
+        self.tickTackToe_window.close()
+        
 
         
 #creates the TicTacToe board
@@ -56,21 +57,32 @@ class TicTacToe(QWidget):
         #Names the window, ontop of the page
         self.setWindowTitle('Tic-Tac-Toe')
         #sets size of the window
-        self.setGeometry(450, 100, 500, 500)
+        self.setGeometry(50, 100, 500, 500)
         #Calls class function
-        self.peices()
+        self.pieces()
+        #Tells user whos turn it is 
+        self.turn = 'x'
+        self.turnLabel = QLabel()
+        self.whoturn()
+        self.board.addWidget(self.turnLabel, 4,0)
 
-    def peices(self):
+    def pieces(self):
         #Creates a grid the widgets can be placed on
-        board = QGridLayout()
+        self.board = QGridLayout()
         #places a widget on 3 by 3 grid
         for j in range(0,3):
             for k in range(0,3):
-                board.addWidget(x_o(j,k), j , k)
+                self.board.addWidget(x_o(j,k), j , k)
         #Makes the layout of the window the grid
-        self.setLayout(board)
-    def exit(self):
-        self.close()
+        self.setLayout(self.board)
+    
+    def whoturn(self):
+        if self.turn == 'x':
+            self.turnLabel.setText("It is X's Turn")
+            self.turn = 'o'
+        elif self.turn == 'o':
+            self.turnLabel.setText("It is O's Turn")
+            self.turn = 'x'
         
 
 #class to check whether someone has won
@@ -97,7 +109,7 @@ class checkWin:
             self.check = list(self.check)
             self.winCheck()  
         self.checkDiagnoal()
-    #I feel like I should be able to do this in one for loop, but i'm not sure how
+    #Puts each value of the diagonals in a list and then uses check win to see if they are the same
     def checkDiagnoal(self):
         self.check = []
         for j in range(3):
@@ -120,7 +132,7 @@ class checkWin:
             msg = QMessageBox(text = "Victory!" + text)
             msg.StandardButton.Ok
             msg.exec()
-            msg.buttonClicked.connect(self.exit())
+            msg.buttonClicked.connect(self.exit)
         
 
     def catsGame(self):
@@ -138,7 +150,7 @@ class checkWin:
                         msg.buttonClicked.connect(self.exit())
 
     def exit(self):
-        sys.exit()
+        
         # checkWin.board =[[0,0,0],[0,0,0],[0,0,0]]
 
 #Class for making the buttons, and giving them value, Uses QPushButtom to make the buttons
@@ -167,7 +179,10 @@ class x_o(QPushButton):
                 x_o.go = 1
                 self.type = 'o'
             checkWin.board[self.location[0]][self.location[1]] = self.type
+        window.tickTackToe_window.whoturn()
         checkWin(self.location, self.type)
+
+        
 
 #This Makes Rock Paper Scissors game
 
@@ -179,7 +194,7 @@ class RPS(QWidget):
       
         self.setWindowTitle('Rock Paper Scissors')
         
-        self.setGeometry(450, 100, 500, 500)
+        self.setGeometry(150, 100, 500, 500)
         
         self.layout = QGridLayout() 
         self.scores = QLabel()
@@ -240,13 +255,11 @@ class RPS(QWidget):
         self.changeScores()
        
     
-    def exits(self):
-        self.rps_animate.close()
 
 class RPSAnimation(QWidget):
     def __init__(self, choice):
         super().__init__()
-        self.setGeometry(950,100, 500, 500)
+        self.setGeometry(650,100, 500, 500)
         self.setWindowTitle('Animation')
         
         self.player_label = QLabel()
@@ -298,7 +311,7 @@ class RPSAnimation(QWidget):
         
         
 
-        #Seeing who one and giving the their gifs
+        #Seeing who won and giving the their gifs
         if self.player == 'scissors':
              self.player_movie = QMovie(r'Pictures\rock-paper-scissors-scissors.gif')
              if self.player == self.aiChoice:
