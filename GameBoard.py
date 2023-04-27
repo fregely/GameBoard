@@ -35,6 +35,7 @@ class MainWindow(QWidget):
         self.layout.addWidget(self.exitButton)
 
         self.setLayout(self.layout)
+<<<<<<< HEAD
         
         
         
@@ -42,6 +43,9 @@ class MainWindow(QWidget):
                   
         
         self.show()
+=======
+                  
+>>>>>>> refs/remotes/origin/main
     def tictactoe(self):
         self.tickTackToe_window = TicTacToe()
         self.tickTackToe_window.show()
@@ -138,7 +142,7 @@ class checkWin:
             msg = QMessageBox(text = "Victory!" + text)
             msg.StandardButton.Ok
             msg.exec()
-            msg.buttonClicked.connect(self.exit())
+            msg.buttonClicked.connect(self.exit)
         
 
     def catsGame(self):
@@ -156,7 +160,7 @@ class checkWin:
                         msg.buttonClicked.connect(self.exit())
 
     def exit(self):
-        sys.exit()
+        
         # checkWin.board =[[0,0,0],[0,0,0],[0,0,0]]
 
 #Class for making the buttons, and giving them value, Uses QPushButtom to make the buttons
